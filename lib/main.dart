@@ -60,6 +60,7 @@ class _MainState extends State<AddictifyApp> {
 //List<CameraDescription> cameras;
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   // Fetch the available cameras before initializing the app.
   /*
