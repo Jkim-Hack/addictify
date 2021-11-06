@@ -7,7 +7,7 @@ class AuthService {
   static final FirebaseAuth _authentication = FirebaseAuth.instance;
 
   LUser userValueFromFirebase(User? user) {
-    return LUser(uid: user!.uid, name: user.displayName, email: user.email);
+    return LUser(uid: user!.uid, name: user.displayName!, email: user.email!);
   }
 
   Future<LUser> registerWithEmailAndPassword(String email, String password) async

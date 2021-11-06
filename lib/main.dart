@@ -1,5 +1,7 @@
+import 'package:addictify/Main/main_page.dart';
 import 'package:flutter/material.dart';
 import 'Login/login.dart';
+import 'Model/l_user.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'globals.dart' as globals;
 
@@ -49,7 +51,7 @@ class _MainState extends State<AddictifyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: LoginPage(),
+      home: MainPage(currentUser: LUser(uid: "12121212", name: "Liam", email: "test@gmail.com")),
     );
   }
 
