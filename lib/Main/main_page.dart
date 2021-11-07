@@ -1,12 +1,11 @@
-import 'dart:async';
-import 'dart:math';
-import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/material.dart';
+
+import 'package:addictify/CameraManager/cameramanager.dart';
 import 'package:addictify/Model/l_user.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
+import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
-import 'package:addictify/CameraManager/cameramanager.dart';
-
+import 'package:intl/intl.dart';
 import 'curve_clipper.dart';
 
 class MainPage extends StatefulWidget {
@@ -22,9 +21,52 @@ class MainPage extends StatefulWidget {
 
 class _MainState extends State<MainPage>
     with WidgetsBindingObserver, TickerProviderStateMixin {
+  AnimationController _slide0Controller;
+  AnimationController _slide1Controller;
+  AnimationController _slide2Controller;
+  AnimationController _slide3Controller;
+  AnimationController _slide4Controller;
+
+  Animation<Offset> _slide0Animation;
+  Animation<Offset> _slide1Animation;
+  Animation<Offset> _slide2Animation;
+  Animation<Offset> _slide3Animation;
+  Animation<Offset> _slide4Animation;
+
+  AnimationController _fade0Controller;
+  Animation<double> _fade0Animation;
+  AnimationController _fade1Controller;
+  Animation<double> _fade1Animation;
+  AnimationController _fade2Controller;
+  Animation<double> _fade2Animation;
+  AnimationController _fade3Controller;
+  Animation<double> _fade3Animation;
+  AnimationController _fade4Controller;
+  Animation<double> _fade4Animation;
+
+
   final Color barBackgroundColor = const Color(0xff72d8bf);
   final Duration animDuration = const Duration(milliseconds: 250);
-  final double barWidth = 15;
+  double barWidthMn = 15;
+  double barWidthTe = 15;
+  double barWidthWe = 15;
+  double barWidthTu = 15;
+  double barWidthFr = 15;
+  double barWidthSt = 15;
+  double barWidthSn = 15;
+
+  var unselected = [Colors.lightBlueAccent, Colors.greenAccent];
+  var selected = [Colors.yellowAccent, Colors.lightBlueAccent];
+
+  var mnColors = [Colors.lightBlueAccent, Colors.greenAccent];
+  var teColors = [Colors.lightBlueAccent, Colors.greenAccent];
+  var wdColors = [Colors.lightBlueAccent, Colors.greenAccent];
+  var tuColors = [Colors.lightBlueAccent, Colors.greenAccent];
+  var frColors = [Colors.lightBlueAccent, Colors.greenAccent];
+  var stColors = [Colors.lightBlueAccent, Colors.greenAccent];
+  var snColors = [Colors.lightBlueAccent, Colors.greenAccent];
+
+
   DateTime _selectedValue = DateTime.now();
 
   List<Color> gradientColors = [
@@ -45,6 +87,102 @@ class _MainState extends State<MainPage>
   @override
   void initState() {
     super.initState();
+    _slide0Controller = AnimationController(
+        duration: const Duration(milliseconds: 800), vsync: this);
+    _slide0Animation = Tween<Offset>(
+      begin: Offset(0, 5.0),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _slide0Controller,
+      curve: Curves.easeInOut,
+    ));
+    _slide1Controller = AnimationController(
+        duration: const Duration(milliseconds: 800), vsync: this);
+    _slide1Animation = Tween<Offset>(
+      begin: Offset(0, 5.0),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _slide1Controller,
+      curve: Curves.easeInOut,
+    ));
+    _slide2Controller = AnimationController(
+        duration: const Duration(milliseconds: 800), vsync: this);
+    _slide2Animation = Tween<Offset>(
+      begin: Offset(0, 6.0),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _slide2Controller,
+      curve: Curves.easeInOut,
+    ));
+    _slide3Controller = AnimationController(
+        duration: const Duration(milliseconds: 800), vsync: this);
+    _slide3Animation = Tween<Offset>(
+      begin: Offset(0, 6.0),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _slide3Controller,
+      curve: Curves.easeInOut,
+    ));
+    _slide4Controller = AnimationController(
+        duration: const Duration(milliseconds: 800), vsync: this);
+    _slide4Animation = Tween<Offset>(
+      begin: Offset(0, 6.0),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _slide4Controller,
+      curve: Curves.easeInOut,
+    ));
+
+    _fade0Controller = AnimationController(
+        duration: const Duration(milliseconds: 1000), vsync: this);
+    _fade0Animation = CurvedAnimation(
+      parent: _fade0Controller,
+      curve: Curves.easeIn,
+    );
+    _fade1Controller = AnimationController(
+        duration: const Duration(milliseconds: 1000), vsync: this);
+    _fade1Animation = CurvedAnimation(
+      parent: _fade1Controller,
+      curve: Curves.easeIn,
+    );
+    _fade2Controller = AnimationController(
+        duration: const Duration(milliseconds: 1000), vsync: this);
+    _fade2Animation = CurvedAnimation(
+      parent: _fade2Controller,
+      curve: Curves.easeIn,
+    );
+    _fade3Controller = AnimationController(
+        duration: const Duration(milliseconds: 1000), vsync: this);
+    _fade3Animation = CurvedAnimation(
+      parent: _fade3Controller,
+      curve: Curves.easeIn,
+    );
+    _fade4Controller = AnimationController(
+        duration: const Duration(milliseconds: 1000), vsync: this);
+    _fade4Animation = CurvedAnimation(
+      parent: _fade4Controller,
+      curve: Curves.easeIn,
+    );
+
+    _fade0Controller.forward().then((value) {
+      _fade1Controller.forward().then((value) {
+        _fade2Controller.forward().then((value) {
+          _fade3Controller.forward().then((value) {
+            _fade4Controller.forward();
+          });
+        });
+      });
+    });
+
+    _slide0Controller.forward().then((value) {
+      _slide1Controller.forward().then((value) {
+        _slide2Controller.forward().then((value) {
+          _slide3Controller.forward().then((value) {
+            _slide4Controller.forward();
+          });
+        });
+      });
+    });
   }
 
   LineChartData mainData() {
@@ -327,7 +465,7 @@ class _MainState extends State<MainPage>
       x: 0,
       barRods: [
         BarChartRodData(
-            y: 8, colors: [Colors.lightBlueAccent, Colors.greenAccent], width: barWidth)
+            y: 8, colors: mnColors, width: barWidthMn)
       ],
       showingTooltipIndicators: [0],
     ),
@@ -335,7 +473,7 @@ class _MainState extends State<MainPage>
       x: 1,
       barRods: [
         BarChartRodData(
-            y: 10, colors: [Colors.lightBlueAccent, Colors.greenAccent], width: barWidth)
+            y: 10, colors: teColors, width: barWidthTe)
       ],
       showingTooltipIndicators: [0],
     ),
@@ -343,7 +481,7 @@ class _MainState extends State<MainPage>
       x: 2,
       barRods: [
         BarChartRodData(
-            y: 14, colors: [Colors.lightBlueAccent, Colors.greenAccent], width: barWidth)
+            y: 14, colors: wdColors, width: barWidthWe)
       ],
       showingTooltipIndicators: [0],
     ),
@@ -351,7 +489,7 @@ class _MainState extends State<MainPage>
       x: 3,
       barRods: [
         BarChartRodData(
-            y: 15, colors: [Colors.lightBlueAccent, Colors.greenAccent], width: barWidth)
+            y: 15, colors: tuColors, width: barWidthTu)
       ],
       showingTooltipIndicators: [0],
     ),
@@ -359,7 +497,7 @@ class _MainState extends State<MainPage>
       x: 4,
       barRods: [
         BarChartRodData(
-            y: 13, colors: [Colors.lightBlueAccent, Colors.greenAccent], width: barWidth)
+            y: 13, colors: frColors, width: barWidthFr)
       ],
       showingTooltipIndicators: [0],
     ),
@@ -367,7 +505,7 @@ class _MainState extends State<MainPage>
       x: 5,
       barRods: [
         BarChartRodData(
-            y: 10, colors: [Colors.lightBlueAccent, Colors.greenAccent], width: barWidth)
+            y: 10, colors: stColors, width: barWidthSt)
       ],
       showingTooltipIndicators: [0],
     ),
@@ -375,7 +513,7 @@ class _MainState extends State<MainPage>
       x: 6,
       barRods: [
         BarChartRodData(
-            y: 10, colors: [Colors.lightBlueAccent, Colors.greenAccent], width: barWidth)
+            y: 10, colors: snColors, width: barWidthSn)
       ],
       showingTooltipIndicators: [0],
     ),
@@ -403,11 +541,19 @@ class _MainState extends State<MainPage>
           Container(
             child: Stack(children: <Widget>[
               Container(
-                width: 75,
-                height: 25,
+                width: 100,
+                height: 35,
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                 child: Row(
                   children: <Widget>[
+                    Padding(
+                        child: Image.asset(
+                          "assets/images/coin_1.png",
+                          height: 30,
+                          width: 30,
+                        ),
+                        padding: const EdgeInsets.fromLTRB(5, 0, 0, 0)
+                    ),
                     Padding(
                       child: Text("123",
                           style: TextStyle(
@@ -415,7 +561,7 @@ class _MainState extends State<MainPage>
                               fontFamily: 'Segoe',
                               fontWeight: FontWeight.w600,
                               fontSize: 15)),
-                      padding: const EdgeInsets.fromLTRB(28, 0, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                     ),
                     Padding(
                       child: Image.asset(
@@ -423,8 +569,8 @@ class _MainState extends State<MainPage>
                         height: 13,
                         width: 13,
                       ),
-                      padding: const EdgeInsets.fromLTRB(3, 0, 0, 0),
-                    )
+                      padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                    ),
                   ],
                 ),
                 decoration: BoxDecoration(
@@ -432,15 +578,6 @@ class _MainState extends State<MainPage>
                   borderRadius: new BorderRadius.circular(20),
                   color: Color(0xFF4A4949),
                 ),
-              ),
-              Positioned(
-                child: Image.asset(
-                  "assets/images/coin.png",
-                  height: 25,
-                  width: 25,
-                ),
-                right: 50,
-                bottom: 0,
               ),
             ]),
           ),
@@ -457,16 +594,16 @@ class _MainState extends State<MainPage>
         showLabels: false,
         showTicks: false,
         axisLineStyle: AxisLineStyle(
-          thickness: 0.05,
+          thickness: 0.1,
           cornerStyle: CornerStyle.bothCurve,
-          color: Color.fromARGB(30, 0, 169, 181),
+          color: Color.fromARGB(80, 0, 169, 181),
           thicknessUnit: GaugeSizeUnit.factor,
         ),
         pointers: <GaugePointer>[
           RangePointer(
-            value: 90, // TODO: Change this dynamically
+            value: 33, // TODO: Change this dynamically
             cornerStyle: CornerStyle.bothCurve,
-            width: 0.05,
+            width: 0.1,
             sizeUnit: GaugeSizeUnit.factor,
             color: Colors.lightGreen,
             gradient: const SweepGradient(
@@ -483,104 +620,169 @@ class _MainState extends State<MainPage>
   }
 
   Widget dateWidget(BuildContext context) {
-    return DatePicker(
-      DateTime.now(),
-      width: 50,
-      daysCount: 7,
-      initialSelectedDate: DateTime.now(),
-      selectionColor: Colors.black,
-      selectedTextColor: Colors.white,
-      onDateChange: (date) {
-        // New date selected
-        setState(() {
-          _selectedValue = date;
-        });
-      },
-    );
+    var d = DateTime.now();
+    var weekDay = d.weekday;
+    var firstDayOfWeek = d.subtract(Duration(days: weekDay - 1));
+    return FadeTransition(
+        opacity: _fade2Animation,
+        child: DatePicker(
+          DateTime.now(),
+          width: 50,
+          daysCount: 7,
+          initialSelectedDate: d,
+          deactivatedColor: Colors.lightGreen,
+          selectionColor: Colors.greenAccent,
+          selectedTextColor: Colors.white,
+          onDateChange: (date) {
+            // New date selected
+            setState(() {
+              _selectedValue = date;
+              if (DateFormat('EEEE').format(date) == "Monday") { // Monday
+                barWidthMn = 25;
+                barWidthTe = 15;
+                barWidthWe = 15;
+                barWidthTu = 15;
+                barWidthFr = 15;
+                barWidthSt = 15;
+                barWidthSn = 15;
+
+                mnColors = selected;
+                teColors = unselected;
+                wdColors = unselected;
+                tuColors = unselected;
+                frColors = unselected;
+                stColors = unselected;
+                snColors = unselected;
+
+              } else if (DateFormat('EEEE').format(date) == "Tuesday") { // Monday
+                barWidthMn = 15;
+                barWidthTe = 25;
+                barWidthWe = 15;
+                barWidthTu = 15;
+                barWidthFr = 15;
+                barWidthSt = 15;
+                barWidthSn = 15;
+
+                mnColors = unselected;
+                teColors = selected;
+                wdColors = unselected;
+                tuColors = unselected;
+                frColors = unselected;
+                stColors = unselected;
+                snColors = unselected;
+              } else if (DateFormat('EEEE').format(date) == "Wednesday") {
+                barWidthMn = 15;
+                barWidthTe = 15;
+                barWidthWe = 25;
+                barWidthTu = 15;
+                barWidthFr = 15;
+                barWidthSt = 15;
+                barWidthSn = 15;
+
+                mnColors = unselected;
+                teColors = unselected;
+                wdColors = selected;
+                tuColors = unselected;
+                frColors = unselected;
+                stColors = unselected;
+                snColors = unselected;
+              } else if (DateFormat('EEEE').format(date) == "Thursday") { // Monday
+                barWidthMn = 15;
+                barWidthTe = 15;
+                barWidthWe = 15;
+                barWidthTu = 25;
+                barWidthFr = 15;
+                barWidthSt = 15;
+                barWidthSn = 15;
+
+                mnColors = unselected;
+                teColors = unselected;
+                wdColors = unselected;
+                tuColors = selected;
+                frColors = unselected;
+                stColors = unselected;
+                snColors = unselected;
+              } else if (DateFormat('EEEE').format(date) == "Friday") { // Monday
+                barWidthMn = 15;
+                barWidthTe = 15;
+                barWidthWe = 15;
+                barWidthTu = 15;
+                barWidthFr = 25;
+                barWidthSt = 15;
+                barWidthSn = 15;
+
+                mnColors = unselected;
+                teColors = unselected;
+                wdColors = unselected;
+                tuColors = unselected;
+                frColors = selected;
+                stColors = unselected;
+                snColors = unselected;
+              } else if (DateFormat('EEEE').format(date) == "Saturday") { // Monday
+                barWidthMn = 15;
+                barWidthTe = 15;
+                barWidthWe = 15;
+                barWidthTu = 15;
+                barWidthFr = 15;
+                barWidthSt = 25;
+                barWidthSn = 15;
+
+                mnColors = unselected;
+                teColors = unselected;
+                wdColors = unselected;
+                tuColors = unselected;
+                frColors = unselected;
+                stColors = selected;
+                snColors = unselected;
+              } else if (DateFormat('EEEE').format(date) == "Sunday") { // Monday
+                barWidthMn = 15;
+                barWidthTe = 15;
+                barWidthWe = 15;
+                barWidthTu = 15;
+                barWidthFr = 15;
+                barWidthSt = 15;
+                barWidthSn = 25;
+
+                mnColors = unselected;
+                teColors = unselected;
+                wdColors = unselected;
+                tuColors = unselected;
+                frColors = unselected;
+                stColors = unselected;
+                snColors = selected;
+              }
+            });
+          },
+        ));
   }
 
   Widget chartWidget(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      color: Colors.black12,
-      child:
-        SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height / 3,
-          child: Stack(
-            children: <Widget>[
-              Align(
-                alignment: Alignment.topCenter,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 15, 20, 20),
-                  child: Text("Daily Sessions",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Segoe',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 20
-                      )
-                  ),
-                )
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: BarChart(
-                          BarChartData(
-                            barTouchData: barTouchData,
-                            titlesData: titlesData,
-                            borderData: borderData,
-                            barGroups: barGroups,
-                            alignment: BarChartAlignment.spaceAround,
-                            maxY: 20,
-                          ),
-                        ),
+    return FadeTransition(
+      opacity: _fade3Animation,
+      child: Card(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          color: Colors.black12,
+          child:
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 3,
+            child: Stack(
+              children: <Widget>[
+                Align(
+                    alignment: Alignment.topCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 15, 20, 20),
+                      child: Text("Daily Sessions",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Segoe',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 20
+                          )
                       ),
-                    ),
-                  ],
+                    )
                 ),
-              ),
-            ],
-          ),
-        )
-    );
-  }
-
-  Widget lineWidget(BuildContext context) {
-    return Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        color: Colors.black12,
-        child:
-        SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height / 3,
-          child: Stack(
-            children: <Widget>[
-              Align(
-                  alignment: Alignment.topCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 15, 20, 20),
-                    child: Text("Goal progress",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Segoe',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 20
-                        )
-                    ),
-                  )
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
+                Padding(
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -590,66 +792,130 @@ class _MainState extends State<MainPage>
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: LineChart(
-                            mainData(),
+                          child: BarChart(
+                            BarChartData(
+                              barTouchData: barTouchData,
+                              titlesData: titlesData,
+                              borderData: borderData,
+                              barGroups: barGroups,
+                              alignment: BarChartAlignment.spaceAround,
+                              maxY: 20,
+                            ),
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
-            ],
-          ),
-        )
+              ],
+            ),
+          )
+      ),
+    );
+  }
+
+  Widget lineWidget(BuildContext context) {
+    return FadeTransition(
+      opacity: _fade4Animation,
+      child: Card(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          color: Colors.black12,
+          child:
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 3,
+            child: Stack(
+              children: <Widget>[
+                Align(
+                    alignment: Alignment.topCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 15, 20, 20),
+                      child: Text("Goal progress",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Segoe',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 20
+                          )
+                      ),
+                    )
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: LineChart(
+                              mainData(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+      ),
     );
   }
 
   Widget cardButton(LUser user) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        color: Colors.black,
-        child: new InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => CameraManager(currentUser: user)),
-            );
-          },
-          child: Container(
-            width: 100.0,
-            height: 100.0,
-            child: Row(
-              children: [
-                Padding(
-                    padding: const EdgeInsets.all(20), child: Image.asset("assets/images/logo.png"),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Add smoking session",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Segoe',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 15)
-                    ),
-                    Text("Remember to find a spot outside",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            color: Colors.white60,
-                            fontFamily: 'Segoe',
-                            fontWeight: FontWeight.w400,
-                            fontSize: 12)
-                    )
-                  ],
-                )
-              ],
+    return FadeTransition(
+      opacity: _fade0Animation,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        child: Card(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          color: Colors.black,
+          child: new InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CameraManager(currentUser: user)),
+              );
+            },
+            child: Container(
+              width: 100.0,
+              height: 100.0,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(20), child: Image.asset("assets/images/burningcig.png"),
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Add smoking session",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Segoe',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15)
+                      ),
+                      Text("Remember to find a spot outside",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              color: Colors.white60,
+                              fontFamily: 'Segoe',
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12)
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -658,47 +924,50 @@ class _MainState extends State<MainPage>
   }
 
   Widget raffleButton() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        color: Colors.orange,
-        child: new InkWell(
-          onTap: () {
-            print("tapped");
-          },
-          child: Container(
-            width: 100.0,
-            height: 100.0,
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Image.asset("assets/images/logo.png"),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Enter the raffle market",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Segoe',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 15)
-                    ),
-                    Text("Spend your hard earned coins!",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            color: Colors.white60,
-                            fontFamily: 'Segoe',
-                            fontWeight: FontWeight.w400,
-                            fontSize: 12)
-                    )
-                  ],
-                )
-              ],
+    return FadeTransition (
+      opacity: _fade1Animation,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        child: Card(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          color: Colors.orange,
+          child: new InkWell(
+            onTap: () {
+              print("tapped");
+            },
+            child: Container(
+              width: 100.0,
+              height: 100.0,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Image.asset("assets/images/logo.png"),
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Enter the raffle market",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Segoe',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15)
+                      ),
+                      Text("Spend your hard earned coins!",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              color: Colors.white60,
+                              fontFamily: 'Segoe',
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12)
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -709,119 +978,119 @@ class _MainState extends State<MainPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white30,
-      body: Stack(
-        children: <Widget>[
-          ClipPath(
-            clipper: CurveClipper(),
-            child: Container(
-              height: 350.0,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end:
-                  Alignment.bottomCenter, // 10% of the width, so there are ten blinds.
-                  colors: <Color>[
-                    Colors.lightBlue,
-                    Colors.lightBlueAccent,
-                    Colors.greenAccent
-                  ], // red to yellow
-                  tileMode: TileMode.clamp, // repeats the gradient over the canvas
+        backgroundColor: Colors.white30,
+        body: Stack(
+          children: <Widget>[
+            ClipPath(
+              clipper: CurveClipper(),
+              child: Container(
+                height: 350.0,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end:
+                    Alignment.bottomCenter, // 10% of the width, so there are ten blinds.
+                    colors: <Color>[
+                      Colors.lightBlue,
+                      Colors.lightBlueAccent,
+                      Colors.greenAccent
+                    ], // red to yellow
+                    tileMode: TileMode.clamp, // repeats the gradient over the canvas
+                  ),
                 ),
               ),
             ),
-          ),
-          Container(
-            child: SafeArea(
-              child: CustomScrollView(
-                slivers: <Widget>[
-                  SliverAppBar(
-                    pinned: false,
-                    snap: false,
-                    floating: false,
-                    expandedHeight: 300.0,
-                    backgroundColor: Colors.transparent,
-                    flexibleSpace: Stack(
-                      children: [
-                        Align(
-                          child: Container(
-                            width: 300,
-                            height: 300,
-                            child: bigCircle(context),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.center,
-                          child: Text("1/3\nsmoked",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Segoe',
-                              fontWeight: FontWeight.w200,
-                              fontSize: 30,
+            Container(
+              child: SafeArea(
+                child: CustomScrollView(
+                  slivers: <Widget>[
+                    SliverAppBar(
+                        pinned: false,
+                        snap: false,
+                        floating: false,
+                        expandedHeight: 300.0,
+                        backgroundColor: Colors.transparent,
+                        flexibleSpace: Stack(
+                          children: [
+                            Align(
+                              child: Container(
+                                width: 300,
+                                height: 300,
+                                child: bigCircle(context),
+                              ),
                             ),
-                          ),
-                        ),
-                      ],
-                    )
-                  ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                        return topBarWidget(context);
-                      },
-                      childCount: 1,
+                            Align(
+                              alignment: Alignment.center,
+                              child: Text("1/3\nsmoked",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'Segoe',
+                                  fontWeight: FontWeight.w200,
+                                  fontSize: 30,
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
                     ),
-                  ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                        return cardButton(widget.currentUser);
-                      },
-                      childCount: 1,
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int index) {
+                          return topBarWidget(context);
+                        },
+                        childCount: 1,
+                      ),
                     ),
-                  ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                        return raffleButton();
-                      },
-                      childCount: 1,
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int index) {
+                          return SlideTransition(position: _slide0Animation, child: cardButton(widget.currentUser));
+                        },
+                        childCount: 1,
+                      ),
                     ),
-                  ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: dateWidget(context),
-                        );
-                      },
-                      childCount: 1,
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int index) {
+                          return SlideTransition(position: _slide1Animation, child: raffleButton());
+                        },
+                        childCount: 1,
+                      ),
                     ),
-                  ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                        return chartWidget(context);
-                      },
-                      childCount: 1,
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int index) {
+                          return SlideTransition(position: _slide2Animation, child: Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: dateWidget(context),
+                          ));
+                        },
+                        childCount: 1,
+                      ),
                     ),
-                  ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                        return lineWidget(context);
-                      },
-                      childCount: 1,
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int index) {
+                          return SlideTransition(position: _slide3Animation, child: chartWidget(context));
+                        },
+                        childCount: 1,
+                      ),
                     ),
-                  ),
-                ],
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int index) {
+                          return SlideTransition(position: _slide4Animation, child:lineWidget(context));
+                        },
+                        childCount: 1,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
-      )
+          ],
+        )
     );
   }
 }

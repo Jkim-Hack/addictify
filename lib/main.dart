@@ -68,15 +68,6 @@ Future<void> main() async {
   } on CameraException catch (e) {
     logError(e.code, e.description);
   }
-  // Fetch the available cameras before initializing the app.
-  /*
-  try {
-    WidgetsFlutterBinding.ensureInitialized();
-    cameras = await availableCameras();
-  } on CameraException catch (e) {
-    logError(e.code, e.description);
-  }
-   */
   runApp(AddictifyApp());
 }
 
