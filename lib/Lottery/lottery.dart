@@ -41,7 +41,7 @@ class LotteryPage extends StatefulWidget {
                   ),),
                 ),
                 Align(
-                  alignment: Alignment. topRight,
+                  alignment: Alignment.topRight,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 25, 25, 0),
                   child: SlideCountdownClock(
@@ -96,7 +96,7 @@ class LotteryPage extends StatefulWidget {
                 ),),
             ),
             Align(
-              alignment: Alignment. topRight,
+              alignment: Alignment.topRight,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(0, 25, 25, 0),
               child: SlideCountdownClock(
@@ -110,6 +110,11 @@ class LotteryPage extends StatefulWidget {
                 ),
               ),
             ),
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Image.asset("assets/images/gc2.png"),
+
             ),
             Align(
               alignment: Alignment.bottomCenter,

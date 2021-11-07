@@ -107,4 +107,8 @@ flutter:
     - assets/images/logo.png
     - assets/images/AddButton.png
     - assets/images/coin.png
+    - assets/images/gc.png
+    - assets/images/gc2.png
+    - assets/images/gc3.png
     - assets/animations/checkmark-animation.gif
+
