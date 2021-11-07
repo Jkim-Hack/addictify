@@ -6,6 +6,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:intl/intl.dart';
+import 'package:addictify/Lottery/lottery.dart';
 import 'curve_clipper.dart';
 
 class MainPage extends StatefulWidget {
@@ -83,6 +84,22 @@ class _MainState extends State<MainPage>
 
   TextField emailTextField;
   TextField passwordTextField;
+
+  @override
+  void dispose() {
+    super.dispose();
+    _slide0Controller.dispose();
+    _slide1Controller.dispose();
+    _slide2Controller.dispose();
+    _slide3Controller.dispose();
+    _slide4Controller.dispose();
+    _fade0Controller.dispose();
+    _fade1Controller.dispose();
+    _fade2Controller.dispose();
+    _fade3Controller.dispose();
+    _fade4Controller.dispose();
+
+  }
 
   @override
   void initState() {
@@ -933,7 +950,11 @@ class _MainState extends State<MainPage>
           color: Colors.orange,
           child: new InkWell(
             onTap: () {
-              print("tapped");
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => LotteryPage()),
+              );
             },
             child: Container(
               width: 100.0,

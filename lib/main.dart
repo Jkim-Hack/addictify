@@ -1,3 +1,4 @@
+import 'package:addictify/CameraManager/cameramanager.dart';
 import 'package:addictify/Main/main_page.dart';
 import 'package:flutter/material.dart';
 import 'Login/login.dart';
@@ -53,6 +54,12 @@ class _MainState extends State<AddictifyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: MainPage(currentUser: LUser(uid: "12121212", name: "Liam", email: "test@gmail.com", coins: 12)),
+      routes: {
+        // When navigating to the "/" route, build the FirstScreen widget.
+        '/main': (context) => MainPage(currentUser: LUser(uid: "12121212", name: "Liam", email: "test@gmail.com", coins: 12)),
+        // When navigating to the "/second" route, build the SecondScreen widget.
+        '/camera': (context) => const CameraManager(),
+      },
     );
   }
 
