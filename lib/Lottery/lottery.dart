@@ -5,7 +5,6 @@ import 'package:addictify/Model/l_user.dart';
 import 'package:slide_countdown_clock/slide_countdown_clock.dart';
 
 
-
 class LotteryPage extends StatefulWidget {
   const LotteryPage({Key key}) : super(key: key);
 
@@ -43,7 +42,7 @@ class LotteryPage extends StatefulWidget {
                 Align(
                   alignment: Alignment.topRight,
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 25, 25, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
                   child: SlideCountdownClock(
                     duration: Duration(days: 1),
                     slideDirection: SlideDirection.Down,
@@ -56,14 +55,17 @@ class LotteryPage extends StatefulWidget {
                     ),
                   ),
                 ),
-
+                Align(
+                  alignment: Alignment.center,
+                  child: Image.asset("assets/images/gc.png", height: 200, width: 200),
+                ),
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: ElevatedButton(child: Text('Enter Now!'),onPressed: () {},  style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color> (Colors.orange), shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18.0),
-                              side: BorderSide(color: Colors.red)
+                              side: BorderSide(color: Colors.white)
                           ),
                       ),
                   ),
@@ -98,7 +100,7 @@ class LotteryPage extends StatefulWidget {
             Align(
               alignment: Alignment.topRight,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 25, 25, 0),
+                padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
               child: SlideCountdownClock(
                 duration: Duration(days: 7),
                 slideDirection: SlideDirection.Down,
@@ -113,7 +115,7 @@ class LotteryPage extends StatefulWidget {
             ),
             Align(
               alignment: Alignment.center,
-              child: Image.asset("assets/images/gc2.png"),
+              child: Image.asset("assets/images/gc2.png", height:225, width:225),
 
             ),
             Align(
@@ -122,12 +124,12 @@ class LotteryPage extends StatefulWidget {
                 backgroundColor: MaterialStateProperty.all<Color> (Colors.orange), shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18.0),
-                    side: BorderSide(color: Colors.red)
+                    side: BorderSide(color: Colors.white)
                 ),
+    ),
               ),
               ),
-              ),
-            ),// Add your child here
+              ), // Add your child here
           ],
         ),
       ),
@@ -157,7 +159,7 @@ class LotteryPage extends StatefulWidget {
             Align(
               alignment: Alignment. topRight,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 25, 25, 0),
+                padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
               child: SlideCountdownClock(
                 duration: Duration(days: 30),
                 slideDirection: SlideDirection.Down,
@@ -171,12 +173,17 @@ class LotteryPage extends StatefulWidget {
             ),
             ),
             Align(
+              alignment: Alignment.center,
+              child: Image.asset("assets/images/gc3.png",height: 250, width: 250),
+
+            ),
+            Align(
               alignment: Alignment.bottomCenter,
               child: ElevatedButton(child: Text('Enter Now!'),onPressed: () {},  style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color> (Colors.orange), shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18.0),
-                    side: BorderSide(color: Colors.red)
+                    side: BorderSide(color: Colors.white)
                 ),
               ),
               ),
@@ -207,9 +214,12 @@ class LotteryPage extends StatefulWidget {
                                 children: <Widget>[
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(
-                                        20, 60, 0, 0),
+                                        0, 20, 0, 0),
+                                    child: Align(
+                                    alignment: Alignment.topCenter,
                                     child: Text(
-                                      "Raffles 🎉",
+
+                                      "Raffles",
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontFamily: 'Segoe',
@@ -217,6 +227,7 @@ class LotteryPage extends StatefulWidget {
                                           fontSize: 30,
                                       ),
                                     ),
+                                          ),
                                     ),
                                 ],
                             ),
