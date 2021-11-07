@@ -2,7 +2,7 @@
     package="com.teamblnd.addictify">
    <application
         android:label="addictify"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

@@ -12,22 +12,22 @@ class LoginPage extends StatefulWidget {
 
 class _LoginState extends State<LoginPage>
     with WidgetsBindingObserver, TickerProviderStateMixin {
-  late AnimationController _slideCirclesController;
-  late AnimationController _textShowController;
-  late AnimationController _showLoginController;
+  AnimationController _slideCirclesController;
+  AnimationController _textShowController;
+  AnimationController _showLoginController;
 
-  late Animation<Offset> _slideBlueCircleAnimation;
-  late Animation<Offset> _slideTealCircleAnimation;
-  late Animation<double> _welcomeTextAnimation;
-  late Animation<double> _showLoginAnimation;
+  Animation<Offset> _slideBlueCircleAnimation;
+  Animation<Offset> _slideTealCircleAnimation;
+  Animation<double> _welcomeTextAnimation;
+  Animation<double> _showLoginAnimation;
 
   AuthService authService = new AuthService();
 
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
 
-  late TextField emailTextField;
-  late TextField passwordTextField;
+  TextField emailTextField;
+  TextField passwordTextField;
 
   @override
   void initState() {

@@ -2,6 +2,7 @@ import 'package:addictify/Main/main_page.dart';
 import 'package:flutter/material.dart';
 import 'Login/login.dart';
 import 'Model/l_user.dart';
+import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'globals.dart' as globals;
 
@@ -51,19 +52,22 @@ class _MainState extends State<AddictifyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MainPage(currentUser: LUser(uid: "12121212", name: "Liam", email: "test@gmail.com")),
+      home: MainPage(currentUser: LUser(uid: "12121212", name: "Liam", email: "test@gmail.com", coins: 12)),
     );
   }
 
 }
 
-//Taken from WeCycleCameraPreview
-
-//List<CameraDescription> cameras;
+List<CameraDescription> cameras;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  try {
+    cameras = await availableCameras();
+  } on CameraException catch (e) {
+    logError(e.code, e.description);
+  }
   // Fetch the available cameras before initializing the app.
   /*
   try {
