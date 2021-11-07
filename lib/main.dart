@@ -53,7 +53,7 @@ class _MainState extends State<AddictifyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MainPage(currentUser: LUser(uid: "12121212", name: "Liam", email: "test@gmail.com", coins: 12)),
+      home: LoginPage(),
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
         '/main': (context) => MainPage(currentUser: LUser(uid: "12121212", name: "Liam", email: "test@gmail.com", coins: 12)),

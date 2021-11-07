@@ -105,7 +105,7 @@ class _MainState extends State<MainPage>
   void initState() {
     super.initState();
     _slide0Controller = AnimationController(
-        duration: const Duration(milliseconds: 800), vsync: this);
+        duration: const Duration(milliseconds: 1000), vsync: this);
     _slide0Animation = Tween<Offset>(
       begin: Offset(0, 5.0),
       end: Offset.zero,
@@ -114,7 +114,7 @@ class _MainState extends State<MainPage>
       curve: Curves.easeInOut,
     ));
     _slide1Controller = AnimationController(
-        duration: const Duration(milliseconds: 800), vsync: this);
+        duration: const Duration(milliseconds: 1000), vsync: this);
     _slide1Animation = Tween<Offset>(
       begin: Offset(0, 5.0),
       end: Offset.zero,
@@ -200,13 +200,17 @@ class _MainState extends State<MainPage>
         });
       });
     });
+    var d = DateTime.now();
+    var weekDay = d.weekday;
+    updateDateWidget(d);
   }
 
   LineChartData mainData() {
     return LineChartData(
       gridData: FlGridData(
         show: true,
-        drawVerticalLine: true,
+        drawVerticalLine: false,
+        drawHorizontalLine: false,
         getDrawingHorizontalLine: (value) {
           return FlLine(
             color: const Color(0xff37434d),
@@ -269,7 +273,7 @@ class _MainState extends State<MainPage>
         ),
       ),
       borderData: FlBorderData(
-          show: true,
+          show: false,
           border: Border.all(color: const Color(0xff37434d), width: 1)),
       minX: 0,
       maxX: 11,
@@ -545,7 +549,7 @@ class _MainState extends State<MainPage>
           Container(
             child: Padding(
               padding: const EdgeInsets.all(20),
-              child: Text("Welcome " + widget.currentUser.name,
+              child: Text("Your Journey",
                 style: TextStyle(
                     color: Colors.white,
                     fontFamily: 'Segoe',
@@ -636,6 +640,123 @@ class _MainState extends State<MainPage>
     ]);
   }
 
+  void updateDateWidget(DateTime date) {
+    if (DateFormat('EEEE').format(date) == "Monday") { // Monday
+      barWidthMn = 25;
+      barWidthTe = 15;
+      barWidthWe = 15;
+      barWidthTu = 15;
+      barWidthFr = 15;
+      barWidthSt = 15;
+      barWidthSn = 15;
+
+      mnColors = selected;
+      teColors = unselected;
+      wdColors = unselected;
+      tuColors = unselected;
+      frColors = unselected;
+      stColors = unselected;
+      snColors = unselected;
+
+    } else if (DateFormat('EEEE').format(date) == "Tuesday") { // Monday
+      barWidthMn = 15;
+      barWidthTe = 25;
+      barWidthWe = 15;
+      barWidthTu = 15;
+      barWidthFr = 15;
+      barWidthSt = 15;
+      barWidthSn = 15;
+
+      mnColors = unselected;
+      teColors = selected;
+      wdColors = unselected;
+      tuColors = unselected;
+      frColors = unselected;
+      stColors = unselected;
+      snColors = unselected;
+    } else if (DateFormat('EEEE').format(date) == "Wednesday") {
+      barWidthMn = 15;
+      barWidthTe = 15;
+      barWidthWe = 25;
+      barWidthTu = 15;
+      barWidthFr = 15;
+      barWidthSt = 15;
+      barWidthSn = 15;
+
+      mnColors = unselected;
+      teColors = unselected;
+      wdColors = selected;
+      tuColors = unselected;
+      frColors = unselected;
+      stColors = unselected;
+      snColors = unselected;
+    } else if (DateFormat('EEEE').format(date) == "Thursday") { // Monday
+      barWidthMn = 15;
+      barWidthTe = 15;
+      barWidthWe = 15;
+      barWidthTu = 25;
+      barWidthFr = 15;
+      barWidthSt = 15;
+      barWidthSn = 15;
+
+      mnColors = unselected;
+      teColors = unselected;
+      wdColors = unselected;
+      tuColors = selected;
+      frColors = unselected;
+      stColors = unselected;
+      snColors = unselected;
+    } else if (DateFormat('EEEE').format(date) == "Friday") { // Monday
+      barWidthMn = 15;
+      barWidthTe = 15;
+      barWidthWe = 15;
+      barWidthTu = 15;
+      barWidthFr = 25;
+      barWidthSt = 15;
+      barWidthSn = 15;
+
+      mnColors = unselected;
+      teColors = unselected;
+      wdColors = unselected;
+      tuColors = unselected;
+      frColors = selected;
+      stColors = unselected;
+      snColors = unselected;
+    } else if (DateFormat('EEEE').format(date) == "Saturday") { // Monday
+      barWidthMn = 15;
+      barWidthTe = 15;
+      barWidthWe = 15;
+      barWidthTu = 15;
+      barWidthFr = 15;
+      barWidthSt = 25;
+      barWidthSn = 15;
+
+      mnColors = unselected;
+      teColors = unselected;
+      wdColors = unselected;
+      tuColors = unselected;
+      frColors = unselected;
+      stColors = selected;
+      snColors = unselected;
+    } else if (DateFormat('EEEE').format(date) == "Sunday") { // Monday
+      barWidthMn = 15;
+      barWidthTe = 15;
+      barWidthWe = 15;
+      barWidthTu = 15;
+      barWidthFr = 15;
+      barWidthSt = 15;
+      barWidthSn = 25;
+
+      mnColors = unselected;
+      teColors = unselected;
+      wdColors = unselected;
+      tuColors = unselected;
+      frColors = unselected;
+      stColors = unselected;
+      snColors = selected;
+    }
+  }
+
   Widget dateWidget(BuildContext context) {
     var d = DateTime.now();
     var weekDay = d.weekday;
@@ -643,7 +764,7 @@ class _MainState extends State<MainPage>
     return FadeTransition(
         opacity: _fade2Animation,
         child: DatePicker(
-          DateTime.now(),
+          firstDayOfWeek,
           width: 50,
           daysCount: 7,
           initialSelectedDate: d,
@@ -654,120 +775,7 @@ class _MainState extends State<MainPage>
             // New date selected
             setState(() {
               _selectedValue = date;
-              if (DateFormat('EEEE').format(date) == "Monday") { // Monday
-                barWidthMn = 25;
-                barWidthTe = 15;
-                barWidthWe = 15;
-                barWidthTu = 15;
-                barWidthFr = 15;
-                barWidthSt = 15;
-                barWidthSn = 15;
-
-                mnColors = selected;
-                teColors = unselected;
-                wdColors = unselected;
-                tuColors = unselected;
-                frColors = unselected;
-                stColors = unselected;
-                snColors = unselected;
-
-              } else if (DateFormat('EEEE').format(date) == "Tuesday") { // Monday
-                barWidthMn = 15;
-                barWidthTe = 25;
-                barWidthWe = 15;
-                barWidthTu = 15;
-                barWidthFr = 15;
-                barWidthSt = 15;
-                barWidthSn = 15;
-
-                mnColors = unselected;
-                teColors = selected;
-                wdColors = unselected;
-                tuColors = unselected;
-                frColors = unselected;
-                stColors = unselected;
-                snColors = unselected;
-              } else if (DateFormat('EEEE').format(date) == "Wednesday") {
-                barWidthMn = 15;
-                barWidthTe = 15;
-                barWidthWe = 25;
-                barWidthTu = 15;
-                barWidthFr = 15;
-                barWidthSt = 15;
-                barWidthSn = 15;
-
-                mnColors = unselected;
-                teColors = unselected;
-                wdColors = selected;
-                tuColors = unselected;
-                frColors = unselected;
-                stColors = unselected;
-                snColors = unselected;
-              } else if (DateFormat('EEEE').format(date) == "Thursday") { // Monday
-                barWidthMn = 15;
-                barWidthTe = 15;
-                barWidthWe = 15;
-                barWidthTu = 25;
-                barWidthFr = 15;
-                barWidthSt = 15;
-                barWidthSn = 15;
-
-                mnColors = unselected;
-                teColors = unselected;
-                wdColors = unselected;
-                tuColors = selected;
-                frColors = unselected;
-                stColors = unselected;
-                snColors = unselected;
-              } else if (DateFormat('EEEE').format(date) == "Friday") { // Monday
-                barWidthMn = 15;
-                barWidthTe = 15;
-                barWidthWe = 15;
-                barWidthTu = 15;
-                barWidthFr = 25;
-                barWidthSt = 15;
-                barWidthSn = 15;
-
-                mnColors = unselected;
-                teColors = unselected;
-                wdColors = unselected;
-                tuColors = unselected;
-                frColors = selected;
-                stColors = unselected;
-                snColors = unselected;
-              } else if (DateFormat('EEEE').format(date) == "Saturday") { // Monday
-                barWidthMn = 15;
-                barWidthTe = 15;
-                barWidthWe = 15;
-                barWidthTu = 15;
-                barWidthFr = 15;
-                barWidthSt = 25;
-                barWidthSn = 15;
-
-                mnColors = unselected;
-                teColors = unselected;
-                wdColors = unselected;
-                tuColors = unselected;
-                frColors = unselected;
-                stColors = selected;
-                snColors = unselected;
-              } else if (DateFormat('EEEE').format(date) == "Sunday") { // Monday
-                barWidthMn = 15;
-                barWidthTe = 15;
-                barWidthWe = 15;
-                barWidthTu = 15;
-                barWidthFr = 15;
-                barWidthSt = 15;
-                barWidthSn = 25;
-
-                mnColors = unselected;
-                teColors = unselected;
-                wdColors = unselected;
-                tuColors = unselected;
-                frColors = unselected;
-                stColors = unselected;
-                snColors = selected;
-              }
+              updateDateWidget(date);
             });
           },
         ));
@@ -892,7 +900,7 @@ class _MainState extends State<MainPage>
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: Card(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          color: Colors.black,
+          color: Colors.black38,
           child: new InkWell(
             onTap: () {
               Navigator.push(

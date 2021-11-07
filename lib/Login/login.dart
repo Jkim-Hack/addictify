@@ -1,3 +1,5 @@
+import 'package:addictify/Main/main_page.dart';
+import 'package:addictify/Model/l_user.dart';
 import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
 import 'package:addictify/globals.dart' as globals;
@@ -12,13 +14,15 @@ class LoginPage extends StatefulWidget {
 
 class _LoginState extends State<LoginPage>
     with WidgetsBindingObserver, TickerProviderStateMixin {
-  AnimationController _slideCirclesController;
   AnimationController _textShowController;
+  AnimationController _fightShowController;
+  AnimationController _withShowController;
   AnimationController _showLoginController;
 
-  Animation<Offset> _slideBlueCircleAnimation;
-  Animation<Offset> _slideTealCircleAnimation;
+
   Animation<double> _welcomeTextAnimation;
+  Animation<double> _fightTextAnimation;
+  Animation<double> _withTextAnimation;
   Animation<double> _showLoginAnimation;
 
   AuthService authService = new AuthService();
@@ -32,16 +36,6 @@ class _LoginState extends State<LoginPage>
   @override
   void initState() {
     super.initState();
-    _slideCirclesController = AnimationController(
-        duration: const Duration(milliseconds: 800), vsync: this);
-    _slideBlueCircleAnimation = Tween<Offset>(
-      begin: Offset(-1.0, 0),
-      end: Offset.zero,
-    ).animate(_slideCirclesController);
-    _slideTealCircleAnimation = Tween<Offset>(
-      begin: Offset(1.0, 0),
-      end: Offset.zero,
-    ).animate(_slideCirclesController);
     _textShowController = AnimationController(
         duration: const Duration(milliseconds: 1500), vsync: this);
     _showLoginController = AnimationController(duration: const Duration(milliseconds: 1000),vsync: this);
@@ -54,98 +48,110 @@ class _LoginState extends State<LoginPage>
       end: 1.0,
     ).animate(_showLoginController);
 
-    _slideCirclesController.forward().then((state) {
-      _textShowController.forward().then((state) {
-        _showLoginController.forward();
+    _fightShowController = AnimationController(
+        duration: const Duration(milliseconds: 1500), vsync: this);
+    _withShowController = AnimationController(duration: const Duration(milliseconds: 1000),vsync: this);
+    _fightTextAnimation = Tween(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(_fightShowController);
+    _withTextAnimation = Tween(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(_withShowController);
+
+    _textShowController.forward().then((state) {
+      _fightShowController.forward().then((state) {
+        _withShowController.forward().then((state) {
+          _showLoginController.forward();
+        });
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    Icon leftArrow = Platform.isAndroid
-        ? Icon(Icons.arrow_back, color: Colors.white, size: 30)
-        : Icon(Icons.arrow_back_ios, color: Colors.white, size: 30);
-
     emailTextField = TextField(
         controller: emailController,
-        decoration: InputDecoration(
-            border: UnderlineInputBorder(
-              borderSide:
-              BorderSide(color: Color(0xFF00839B)),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                    color: Color(0xFF00839B)))));
+        decoration: InputDecoration.collapsed(
+          hintText: 'Email address',
+        )
+    );
 
     passwordTextField = TextField(
         controller: passwordController,
         obscureText: true,
-        decoration: InputDecoration(
-            border: UnderlineInputBorder(
-              borderSide:
-              BorderSide(color: Color(0xFF00839B)),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                    color: Color(0xFF00839B)))));
+        decoration: InputDecoration.collapsed(
+            hintText: 'Password',
+            border: InputBorder.none,
+        ),
+      textAlign: TextAlign.left,
+    );
 
-    return Scaffold(
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: Stack(
-          children: <Widget>[
-            Positioned(
-              top: -180,
-              right: -250,
-              height: 600,
-              width: 600,
-              child: SlideTransition(
-                position: _slideTealCircleAnimation,
-                child: globals.tealCircle,
-              ),
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+          body: Container(
+            decoration: new BoxDecoration(
+                gradient: new LinearGradient(
+                  begin: Alignment.bottomLeft,
+                  end: Alignment.topRight,
+                  colors: [
+                    Colors.deepOrangeAccent,
+                    Colors.orangeAccent
+                  ],
+                )
             ),
-            Positioned(
-              top: -180,
-              right: 10,
-              height: 600,
-              width: 600,
-              child: SlideTransition(
-                position: _slideBlueCircleAnimation,
-                child: globals.blueCircle,
-              ),
-            ),
-            Positioned(
-              left: 10,
-              top: 45,
-              width: 40,
-              height: 60,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: leftArrow,
-              ),
-            ),
-            Column(
+            child: Column(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 FadeTransition(
                   opacity: _welcomeTextAnimation,
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 100, 20, 20),
-                    child: Text("Welcome back.",
+                    padding: const EdgeInsets.fromLTRB(20, 100, 20, 0),
+                    child: Text("Addictify",
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'Segoe',
                           fontWeight: FontWeight.w600,
-                          fontSize: 40,
+                          fontSize: 60,
                         )),
                   ),
+                ),
+                Row(
+                  children: [
+                    FadeTransition(
+                      opacity: _fightTextAnimation,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(70, 20, 5, 20),
+                        child: Text("Fight addiction",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Segoe',
+                              fontWeight: FontWeight.w400,
+                              fontSize: 20,
+                            )),
+                      ),
+                    ),
+                    FadeTransition(
+                      opacity: _withTextAnimation,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+                        child: Text("with addiction.",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Segoe',
+                              fontWeight: FontWeight.w400,
+                              fontSize: 20,
+                            )),
+                      ),
+                    ),
+                  ],
                 ),
                 FadeTransition(
                   opacity: _showLoginAnimation,
@@ -154,71 +160,104 @@ class _LoginState extends State<LoginPage>
                       Column(
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 50, 275, 0),
-                            child: Text("Email",
-                                style: TextStyle(
-                                    color: const Color(0xFF00839B),
-                                    fontFamily: 'Segoe',
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 15)),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 40, horizontal: 40),
+                            child: Container(
+                              width:  MediaQuery.of(context).size.width,
+                              height:  MediaQuery.of(context).size.height / 15,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:  BorderRadius.circular(15),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                    offset: Offset(0, 3), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              child: Align(alignment: Alignment.centerLeft, child: Padding(padding: const EdgeInsets.fromLTRB(15, 0, 0, 0), child: emailTextField)),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(
-                                vertical: 0, horizontal: 60),
-                            child: emailTextField,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 25, 250, 0),
-                            //const EdgeInsets.fromLTRB(left, top, right, bottom)
-                            child: Text("Password",
-                                style: TextStyle(
-                                    color: const Color(0xFF00839B),
-                                    fontFamily: 'Segoe',
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 15)),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 0, horizontal: 60),
-                            child: passwordTextField,
+                                vertical: 0, horizontal: 40),
+                            child: Container(
+                              width:  MediaQuery.of(context).size.width,
+                              height:  MediaQuery.of(context).size.height / 15,
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                    offset: Offset(0, 3), // changes position of shadow
+                                  ),
+                                ],
+                                color: Colors.white,
+                                borderRadius:  BorderRadius.circular(15),
+                              ),
+                              child: Align(alignment: Alignment.centerLeft, child: Padding(padding: const EdgeInsets.fromLTRB(15, 0, 0, 0), child: passwordTextField)),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.fromLTRB(20, 50, 20, 0),
-                            child: FlatButton(
-                              onPressed: () {
-                                //TODO: ADD AUTHENTICATION
-                                String email = emailController.text.toString().substring(0,emailController.text.toString().length-1);
-                                String password = passwordController.text.toString();
-                                authService.signInWithEmailAndPassword(email, password).then((firebaseUser) {
-                                  if(firebaseUser != null){
-                                    /*Navigator.push(
+                            child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius:  BorderRadius.circular(15),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 5,
+                                      blurRadius: 7,
+                                      offset: Offset(0, 3), // changes position of shadow
+                                    ),
+                                  ],
+                                ),
+                              child: FlatButton(
+                                onPressed: () {
+                                  //TODO: ADD AUTHENTICATION
+                                  String email = emailController.text.toString().substring(0,emailController.text.toString().length-1);
+                                  String password = passwordController.text.toString();/*
+                                  authService.signInWithEmailAndPassword(email, password).then((firebaseUser) {
+                                    if(firebaseUser != null){
+                                      /*Navigator.push(
                                       context
                                       MaterialPageRoute(
                                           builder: (context) => CameraManager()),
-
-
                                     ); */
-                                  } else {
-                                    //TODO: ADD FAILURE
-                                  }
-                                });
-                              },
-                              color: const Color(0xFF1E99F2),
-                              padding:
-                              const EdgeInsets.fromLTRB(100, 15, 100, 15),
-                              child: Text(
-                                "Sign in",
-                                style: TextStyle(
-                                    fontFamily: 'Segoe',
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 30,
-                                    color: Colors.white),
+                                    } else {
+                                      //TODO: ADD FAILURE
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                          builder: (context) => MainPage(currentUser: LUser(uid: "12121212", name: "Liam", email: "test@gmail.com", coins: 12))));
+                                    }
+                                  }); */
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => MainPage(currentUser: LUser(uid: "12121212", name: "Liam", email: "test@gmail.com", coins: 12))));
+                                },
+                                color: Colors.white,
+                                padding:
+                                const EdgeInsets.fromLTRB(100, 15, 100, 15),
+                                child: Text(
+                                  "Sign in",
+                                  style: TextStyle(
+                                      fontFamily: 'Segoe',
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 20,
+                                      color: Colors.deepOrangeAccent),
+                                ),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: new BorderRadius.circular(10.0),
+                                    side: BorderSide(color: const Color(0x00))
+                                        .scale(1)),
                               ),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(40.0),
-                                  side: BorderSide(color: const Color(0xFF1E99F2))
-                                      .scale(2)),
-                            ),
+                            )
                           ),
                         ],
                       )
@@ -227,8 +266,7 @@ class _LoginState extends State<LoginPage>
                 )
               ],
             ),
-          ],
-        ),
+          )
       ),
     );
   }
